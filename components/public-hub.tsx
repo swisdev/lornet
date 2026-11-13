@@ -38,7 +38,7 @@ function visit(project: Project, eventType: 'visit' | 'launch') {
   }).catch(() => undefined)
 }
 
-export function PublicHub({ initialProjects }: { initialProjects: Project[] }) {
+export function PublicHub({ initialProjects, initialIsSignedIn, initialIsAdmin }: { initialProjects: Project[]; initialIsSignedIn: boolean; initialIsAdmin: boolean }) {
   const [projects, setProjects] = useState(initialProjects)
   const [period, setPeriod] = useState<ActivityPeriod>('24h')
   const { data: networkStats } = useSWR<PublicStats>(`/api/public-stats?period=${period}`, statsFetcher, { refreshInterval: 30000, revalidateOnFocus: true })
@@ -81,10 +81,7 @@ export function PublicHub({ initialProjects }: { initialProjects: Project[] }) {
             <a className="transition hover:text-[#111827]" href="#projects">Projects</a>
             <a className="transition hover:text-[#111827]" href="#stats">Live stats</a>
           </nav>
-          <div className="flex items-center gap-2">
-            <Link href="/sign-in" className="inline-flex h-10 items-center rounded-xl px-3 text-[12px] font-medium text-[#566259] transition hover:bg-white hover:text-[#17211a]">Sign in</Link>
-            <Link href="/sign-up" className="inline-flex h-10 items-center gap-2 rounded-xl bg-emerald-700 px-4 text-[12px] font-semibold text-white shadow-[0_2px_8px_#04785722] transition hover:bg-emerald-800">Sign up <ArrowUpRight size={14}/></Link>
-          </div>
+          {initialIsAdmin ? <Link href="/admin" className="inline-flex h-10 items-center gap-2 rounded-xl bg-emerald-700 px-4 text-[12px] font-semibold text-white shadow-[0_2px_8px_#04785722] transition hover:bg-emerald-800">Admin panel <ArrowUpRight size={14}/></Link> : initialIsSignedIn ? <span className="rounded-xl bg-white px-3 py-2 text-[11px] font-medium text-[#566259]">Signed in</span> : <div className="flex items-center gap-2"><Link href="/sign-in" className="inline-flex h-10 items-center rounded-xl px-3 text-[12px] font-medium text-[#566259] transition hover:bg-white hover:text-[#17211a]">Sign in</Link><Link href="/sign-up" className="inline-flex h-10 items-center gap-2 rounded-xl bg-emerald-700 px-4 text-[12px] font-semibold text-white shadow-[0_2px_8px_#04785722] transition hover:bg-emerald-800">Sign up <ArrowUpRight size={14}/></Link></div>}
         </div>
       </header>
 
@@ -147,7 +144,7 @@ export function PublicHub({ initialProjects }: { initialProjects: Project[] }) {
           <div><p className="text-[11px] font-semibold uppercase tracking-[.15em] text-emerald-700">One connected network</p><h2 className="mt-2 text-[25px] font-semibold tracking-[-.045em]">A little more connected, every day.</h2><p className="mt-2 max-w-[470px] text-[13px] leading-6 text-[#778078]">Lornet brings independent websites and digital projects together in one open, evolving ecosystem.</p></div>
           <Link href="/sign-in" className="inline-flex h-11 shrink-0 items-center gap-2 rounded-xl border border-[#e4e9e4] bg-[#fbfcfb] px-4 text-[12px] font-semibold text-[#28352c] transition hover:border-[#b9cbbd]">Sign in to Lornet <ArrowUpRight size={14} /></Link>
         </div>
-        <footer className="flex flex-col items-start justify-between gap-3 py-8 text-[11px] text-[#8a938c] sm:flex-row sm:items-center"><span className="font-semibold tracking-[-.03em] text-[#556057]">lornet<span className="text-emerald-600">.</span></span><span>Independent projects. Shared possibility.</span><span>Usage analytics record visitor IP, browser, and device data.</span><span>© {new Date().getFullYear()} Lornet</span></footer>
+        <footer className="flex flex-col items-start justify-between gap-3 py-8 text-[11px] text-[#8a938c] sm:flex-row sm:items-center"><span className="font-semibold tracking-[-.03em] text-[#556057]">lornet<span className="text-emerald-600">.</span></span><span>Independent projects. Shared possibility.</span><span>Usage analytics record visitor IP, browser/device data, and account email when signed in.</span><span>© {new Date().getFullYear()} Lornet</span></footer>
       </section>
     </main>
   )

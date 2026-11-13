@@ -10,7 +10,7 @@ export async function GET() {
 
   const [{ data: projects, error: projectsError }, { data: logs, error: logsError }, { count: totalVisits, error: countError }, role] = await Promise.all([
     supabase.from('projects').select('id,title,slug,description,url,category,status,visible,launches,created_at').order('created_at', { ascending: false }),
-    supabase.from('visitor_logs').select('id,project_id,project_title,event_type,ip_address,user_agent,device,created_at').order('created_at', { ascending: false }).limit(1200),
+    supabase.from('visitor_logs').select('id,project_id,project_title,event_type,ip_address,user_agent,device,created_at,user_id,user_email').order('created_at', { ascending: false }).limit(1200),
     supabase.from('visitor_logs').select('id', { count: 'exact', head: true }),
     user.email?.toLowerCase() === 'lolfaw99@gmail.com'
       ? supabase.from('admins').select('email,created_at').order('created_at', { ascending: false })

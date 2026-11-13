@@ -37,8 +37,7 @@ export function AuthPage({ initialMode = 'signin' }: { initialMode?: 'signin' | 
       const { data: { user } } = await supabase.auth.getUser()
       if (!active) return
       if (user) {
-        const { data: isAdmin } = await supabase.rpc('lornet_is_admin')
-        if (active) router.replace(isAdmin ? '/admin' : '/')
+        if (active) router.replace('/')
       } else setReady(true)
     }
     void routeUser()
@@ -67,17 +66,13 @@ export function AuthPage({ initialMode = 'signin' }: { initialMode?: 'signin' | 
           setPassword('')
           return
         }
-        const { data: { user } } = await supabase.auth.getUser()
-        const { data: isAdmin } = await supabase.rpc('lornet_is_admin')
-        router.replace(user && isAdmin ? '/admin' : '/')
+        router.replace('/')
         return
       }
 
       const { error: signinError } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password })
       if (signinError) throw signinError
-      const { data: { user } } = await supabase.auth.getUser()
-      const { data: isAdmin } = await supabase.rpc('lornet_is_admin')
-      router.replace(user && isAdmin ? '/admin' : '/')
+      router.replace('/')
     } catch (cause) {
       setError(getAuthMessage(cause))
     } finally {
