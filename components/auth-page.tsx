@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, ArrowUpRight, Layers3, LoaderCircle, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, LoaderCircle, ShieldCheck } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { LornetBrand } from '@/components/lornet-brand'
 
 function getAuthMessage(error: unknown) {
   const message = error instanceof Error ? error.message.toLowerCase() : ''
@@ -15,13 +16,13 @@ function getAuthMessage(error: unknown) {
   return 'We could not complete that request. Please try again.'
 }
 
-export function AuthPage() {
+export function AuthPage({ initialMode = 'signin' }: { initialMode?: 'signin' | 'signup' }) {
   const router = useRouter()
   const supabase = useMemo(() => {
     if (typeof window === 'undefined') return null
     try { return createClient() } catch { return null }
   }, [])
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin')
+  const [mode, setMode] = useState<'signin' | 'signup'>(initialMode)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
@@ -89,7 +90,7 @@ export function AuthPage() {
   return (
     <main className="min-h-screen bg-[#f9f9f8] px-5 py-8 text-[#16201a]">
       <header className="mx-auto flex max-w-[1180px] items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5" aria-label="Lornet home"><span className="flex size-9 items-center justify-center rounded-xl bg-[#111827] text-white"><Layers3 size={18}/></span><span className="text-[20px] font-semibold tracking-[-.06em]">lornet<span className="text-emerald-600">.</span></span></Link>
+        <Link href="/" className="flex items-center gap-2.5" aria-label="Lornet home"><LornetBrand /></Link>
         <Link href="/" className="inline-flex items-center gap-2 text-[12px] text-[#778078] transition hover:text-[#17211a]"><ArrowLeft size={14}/> Back to network</Link>
       </header>
       <div className="mx-auto grid max-w-[980px] items-center gap-14 py-12 md:min-h-[calc(100vh-100px)] md:grid-cols-[1fr_400px] md:py-0">

@@ -11,7 +11,7 @@ export async function updateSession(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     supabaseKey,
     {
-      cookieOptions: { secure: process.env.NODE_ENV === 'production' },
+      cookieOptions: { secure: process.env.NODE_ENV === 'production', sameSite: 'lax', maxAge: 60 * 60 * 24 * 365 },
       cookies: {
         getAll: () => request.cookies.getAll(),
         setAll(cookiesToSet) {

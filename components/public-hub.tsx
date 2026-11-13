@@ -3,9 +3,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import useSWR from 'swr'
 import Link from 'next/link'
-import { ArrowDownRight, ArrowUpRight, ArrowUpRightFromSquare, ArrowRight, Box, Globe2, Layers3 } from 'lucide-react'
+import { ArrowDownRight, ArrowUpRight, ArrowUpRightFromSquare, ArrowRight, Box, Globe2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { NetworkChart, type ActivityPeriod } from '@/components/network-chart'
+import { LornetBrand } from '@/components/lornet-brand'
 import type { Project } from '@/lib/projects'
 
 type PublicStats = { points: { time: string; visits: number; launches: number }[]; totalVisits: number; projectClicks: Record<string, number>; live: boolean }
@@ -73,17 +74,17 @@ export function PublicHub({ initialProjects }: { initialProjects: Project[] }) {
       <header className="sticky top-0 z-30 border-b border-[#e9ebe8] bg-[#f9f9f8]/90 backdrop-blur-xl">
         <div className="mx-auto flex h-[76px] max-w-[1240px] items-center justify-between px-5 sm:px-8">
           <a href="#top" className="flex items-center gap-2.5" aria-label="Lornet home">
-            <span data-logo-slot="lornet" className="flex size-9 items-center justify-center overflow-hidden rounded-xl bg-[#111827] text-white"><Layers3 size={18} strokeWidth={1.8} /></span>
-            <span className="text-[20px] font-semibold tracking-[-0.06em]">lornet<span className="text-emerald-600">.</span></span>
+            <LornetBrand />
           </a>
           <nav aria-label="Main navigation" className="hidden items-center gap-9 text-[13px] font-medium text-[#6b7280] md:flex">
             <a className="transition hover:text-[#111827]" href="#about">About network</a>
             <a className="transition hover:text-[#111827]" href="#projects">Projects</a>
             <a className="transition hover:text-[#111827]" href="#stats">Live stats</a>
           </nav>
-          <Link href="/sign-in" className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#e5e7eb] bg-white px-4 text-[13px] font-medium shadow-[0_1px_2px_#1018280a] transition hover:border-[#cbd5ce] hover:bg-[#fbfdfb]">
-            Sign in <ArrowUpRight size={14} />
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/sign-in" className="inline-flex h-10 items-center rounded-xl px-3 text-[12px] font-medium text-[#566259] transition hover:bg-white hover:text-[#17211a]">Sign in</Link>
+            <Link href="/sign-up" className="inline-flex h-10 items-center gap-2 rounded-xl bg-emerald-700 px-4 text-[12px] font-semibold text-white shadow-[0_2px_8px_#04785722] transition hover:bg-emerald-800">Sign up <ArrowUpRight size={14}/></Link>
+          </div>
         </div>
       </header>
 

@@ -123,6 +123,18 @@
     @apply bg-background text-foreground;
     font-family: 'DM Sans Variable', Arial, Helvetica, sans-serif;
     background-color: #f9f9f8;
+    cursor: default;
+    caret-color: transparent;
+  }
+  a, button, select, [role='button'], input[type='checkbox'], input[type='radio'] {
+    cursor: pointer;
+  }
+  input:not([type='checkbox']):not([type='radio']), textarea, [contenteditable='true'] {
+    cursor: text;
+    caret-color: auto;
+  }
+  button:disabled {
+    cursor: not-allowed;
   }
   button, a, input, select, textarea {
     -webkit-tap-highlight-color: transparent;
