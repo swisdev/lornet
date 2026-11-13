@@ -1,27 +1,16 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import { LORNET_LOGO_SOURCE } from '@/components/lornet-brand'
 
 export const metadata: Metadata = {
   title: { default: 'Lornet — A connected digital ecosystem', template: '%s | Lornet' },
   description: 'Explore a connected network of open websites and digital projects built by Lornet.',
   generator: 'Next.js',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: [{ url: LORNET_LOGO_SOURCE, type: 'image/png' }],
+    shortcut: LORNET_LOGO_SOURCE,
+    apple: LORNET_LOGO_SOURCE,
   },
 }
 
